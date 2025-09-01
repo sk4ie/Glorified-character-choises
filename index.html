@@ -605,4 +605,84 @@
     function resetStats() {
       if (confirm('Are you sure you want to reset all your click data? This cannot be undone!')) {
         clickData = {
-  
+          'severia': 0,
+          'hoshou marine': 0,
+          'shylily': 0,
+          'weepy miu': 0,
+          'lunar bunnie': 0
+        };
+        
+        try {
+          localStorage.setItem('characterClicks', JSON.stringify(clickData));
+        } catch (error) {
+          console.log('localStorage not available');
+        }
+
+        const badges = document.querySelectorAll('.popular-badge');
+        badges.forEach(function(badge) {
+          badge.remove();
+        });
+        
+        updateAllCounters();
+        updateStats();
+      }
+    }
+
+    // Theme toggle
+    function toggleTheme() {
+      const body = document.body;
+      const toggle = document.getElementById('themeToggle');
+      
+      if (toggle.checked) {
+        body.classList.remove('light-mode');
+      } else {
+        body.classList.add('light-mode');
+      }
+    }
+
+    // Toggle card
+    function toggleCard(header) {
+      const content = header.nextElementSibling;
+      const isOpening = content.style.display !== "block";
+      content.style.display = isOpening ? "block" : "none";
+
+      if (isOpening) {
+        const card = header.closest('.card');
+        const characterName = card.dataset.character;
+        trackClick(characterName);
+      }
+    }
+
+    // Filter cards
+    function filterCards() {
+      const input = document.getElementById("searchInput").value.toLowerCase().trim();
+      const cards = document.querySelectorAll(".card");
+
+      cards.forEach(function(card) {
+        if (input === "") {
+          card.style.display = "block";
+          return;
+        }
+
+        const character = card.dataset.character.toLowerCase();
+        const keywords = card.dataset.keywords.toLowerCase();
+        
+        if (character.includes(input) || keywords.includes(input)) {
+          card.style.display = "block";
+        } else {
+          card.style.display = "none";
+        }
+      });
+    }
+
+    // Initialize on load
+    document.addEventListener("DOMContentLoaded", function() {
+      const cards = document.querySelectorAll(".card");
+      cards.forEach(function(card) {
+        card.style.display = "block";
+      });
+      initializeClickTracking();
+    });
+  </script>
+</body>
+</html>
