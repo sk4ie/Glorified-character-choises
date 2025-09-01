@@ -129,59 +129,83 @@
     }
 
     .click-counter {
-      font-size: 12px;
-      background-color: #4da6ff;
+      font-size: 14px;
+      background: linear-gradient(135deg, #4da6ff, #66b3ff);
       color: white;
-      padding: 2px 8px;
-      border-radius: 12px;
-      font-weight: normal;
-      min-width: 20px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-weight: 600;
+      min-width: 30px;
       text-align: center;
+      box-shadow: 0 2px 8px rgba(77, 166, 255, 0.3);
+      border: 2px solid rgba(255, 255, 255, 0.2);
     }
 
     .stats-section {
-      background-color: rgba(77, 166, 255, 0.1);
-      border-radius: 8px;
-      padding: 15px;
-      margin-bottom: 20px;
+      background: linear-gradient(135deg, rgba(77, 166, 255, 0.15), rgba(77, 166, 255, 0.05));
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 25px;
       text-align: center;
       border: 1px solid rgba(77, 166, 255, 0.3);
+      backdrop-filter: blur(10px);
     }
 
     .stats-section h3 {
-      margin: 0 0 10px 0;
+      margin: 0 0 15px 0;
       color: #4da6ff;
-      font-size: 16px;
+      font-size: 18px;
+      font-weight: 600;
     }
 
     .stats-text {
-      font-size: 14px;
-      opacity: 0.8;
+      font-size: 15px;
+      line-height: 1.6;
+      font-weight: 500;
     }
 
-    .popular-badge {
-      position: absolute;
-      top: 8px;
-      right: 8px;
-      background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+    .stats-text strong {
+      font-weight: 700;
+    }
+
+    .stats-text small {
+      opacity: 0.7;
+      font-size: 13px;
+    }
+
+    .reset-btn {
+      margin-top: 15px;
+      background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
       color: white;
-      font-size: 10px;
-      padding: 3px 6px;
-      border-radius: 8px;
-      font-weight: bold;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .reset-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
     }
 
     body.light-mode .click-counter {
-      background-color: #0077cc;
+      background: linear-gradient(135deg, #0077cc, #4da6ff);
     }
 
     body.light-mode .stats-section {
-      background-color: rgba(0, 119, 204, 0.1);
+      background: linear-gradient(135deg, rgba(0, 119, 204, 0.15), rgba(0, 119, 204, 0.05));
       border-color: rgba(0, 119, 204, 0.3);
     }
 
     body.light-mode .stats-section h3 {
       color: #0077cc;
+    }
+
+    body.light-mode .stats-text {
+      color: #333;
     }
 
     .card-content {
@@ -356,8 +380,9 @@
 
     <!-- Stats Section -->
     <div class="stats-section" id="statsSection" style="display: none;">
-      <h3>📊 Your Stats</h3>
+      <h3>📊 Your Activity</h3>
       <div class="stats-text" id="statsText">Start clicking characters to see your activity!</div>
+      <button class="reset-btn" onclick="resetStats()">🔄 Reset All Data</button>
     </div>
 
     <!-- Cards Start -->
@@ -475,37 +500,76 @@
   </div>
 
   <script>
-    // NOTE: This localStorage functionality will work on your live GitHub Pages site
-    // but not in this Claude.ai artifact preview due to technical limitations
-
-    // Character click tracking
+    // Character click tracking with REAL localStorage (works on your live site!)
     let clickData = {};
 
-    // Initialize click tracking (this would use localStorage on your live site)
+    // Initialize click tracking with localStorage
     function initializeClickTracking() {
-      // On your live site, this would be:
-      // clickData = JSON.parse(localStorage.getItem('characterClicks')) || {};
-      
-      // For demo purposes in this artifact, we'll use a temporary object
-      clickData = {
-        'severia': 0,
-        'hoshou marine': 0,
-        'shylily': 0,
-        'weepy miu': 0,
-        'lunar bunnie': 0
-      };
+      try {
+        // Load data from localStorage (this WILL work on your GitHub Pages site!)
+        const savedData = localStorage.getItem('characterClicks');
+        if (savedData) {
+          clickData = JSON.parse(savedData);
+        } else {
+          // Initialize with zeros if no saved data
+          clickData = {
+            'severia': 0,
+            'hoshou marine': 0,
+            'shylily': 0,
+            'weepy miu': 0,
+            'lunar bunnie': 0
+          };
+        }
+      } catch (error) {
+        // Fallback for Claude.ai artifact (won't persist)
+        console.log('localStorage not available, using temporary storage');
+        clickData = {
+          'severia': 0,
+          'hoshou marine': 0,
+          'shylily': 0,
+          'weepy miu': 0,
+          'lunar bunnie': 0
+        };
+      }
 
       updateAllCounters();
       updateStats();
     }
 
-    // Save click data (this would use localStorage on your live site)
+    // Save click data to localStorage
     function saveClickData() {
-      // On your live site, this would be:
-      // localStorage.setItem('characterClicks', JSON.stringify(clickData));
-      
-      // For now, data only persists during the current session
+      try {
+        // This WILL work and persist on your GitHub Pages site!
+        localStorage.setItem('characterClicks', JSON.stringify(clickData));
+      } catch (error) {
+        console.log('localStorage not available');
+      }
       updateStats();
+    }
+
+    // Reset all statistics
+    function resetStats() {
+      if (confirm('Are you sure you want to reset all your click data? This cannot be undone!')) {
+        clickData = {
+          'severia': 0,
+          'hoshou marine': 0,
+          'shylily': 0,
+          'weepy miu': 0,
+          'lunar bunnie': 0
+        };
+        
+        try {
+          localStorage.setItem('characterClicks', JSON.stringify(clickData));
+        } catch (error) {
+          console.log('localStorage not available');
+        }
+
+        // Remove all popular badges
+        document.querySelectorAll('.popular-badge').forEach(badge => badge.remove());
+        
+        updateAllCounters();
+        updateStats();
+      }
     }
 
     // Track character click
@@ -527,6 +591,17 @@
         const badge = document.createElement('div');
         badge.className = 'popular-badge';
         badge.textContent = '🔥 Popular';
+        badge.style.cssText = `
+          position: absolute;
+          top: 8px;
+          right: 8px;
+          background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+          color: white;
+          font-size: 10px;
+          padding: 3px 6px;
+          border-radius: 8px;
+          font-weight: bold;
+        `;
         card.appendChild(badge);
       }
 
@@ -544,106 +619,4 @@
         // Add popular badges for characters with 5+ clicks
         if (clickData[character] >= 5) {
           const card = document.querySelector(`[data-character="${character}"]`);
-          if (card && !card.querySelector('.popular-badge')) {
-            const badge = document.createElement('div');
-            badge.className = 'popular-badge';
-            badge.textContent = '🔥 Popular';
-            card.appendChild(badge);
-          }
-        }
-      });
-    }
-
-    // Update stats section
-    function updateStats() {
-      const totalClicks = Object.values(clickData).reduce((sum, clicks) => sum + clicks, 0);
-      
-      if (totalClicks === 0) {
-        document.getElementById('statsSection').style.display = 'none';
-        return;
-      }
-
-      document.getElementById('statsSection').style.display = 'block';
-
-      // Find most clicked character
-      let mostClicked = Object.keys(clickData).reduce((a, b) => 
-        clickData[a] > clickData[b] ? a : b
-      );
-
-      // Capitalize character names for display
-      const capitalizedName = mostClicked.split(' ').map(word => 
-        word.charAt(0).toUpperCase() + word.slice(1)
-      ).join(' ');
-
-      const statsText = document.getElementById('statsText');
-      statsText.innerHTML = `
-        <strong>Total clicks:</strong> ${totalClicks}<br>
-        <strong>Most viewed:</strong> ${capitalizedName} (${clickData[mostClicked]} times)<br>
-        <small>Your activity is saved locally on this device</small>
-      `;
-    }
-
-    // Theme toggle functionality
-    const themeToggle = document.getElementById('themeToggle');
-    const body = document.body;
-
-    // Set initial theme (dark mode by default)
-    themeToggle.checked = true;
-
-    themeToggle.addEventListener('change', function() {
-      if (this.checked) {
-        // Dark mode (checkbox checked)
-        body.classList.remove('light-mode');
-      } else {
-        // Light mode (checkbox unchecked)
-        body.classList.add('light-mode');
-      }
-    });
-
-    function toggleCard(header) {
-      const content = header.nextElementSibling;
-      const isOpening = content.style.display !== "block";
-      content.style.display = isOpening ? "block" : "none";
-
-      // Track the click if opening the card
-      if (isOpening) {
-        const card = header.closest('.card');
-        const characterName = card.dataset.character;
-        trackClick(characterName);
-      }
-    }
-
-    function filterCards() {
-      const input = document.getElementById("searchInput").value.toLowerCase().trim();
-      const cards = document.querySelectorAll(".card");
-
-      cards.forEach(card => {
-        if (input === "") {
-          card.style.display = "block";
-          return;
-        }
-
-        const character = card.dataset.character.toLowerCase();
-        const keywords = card.dataset.keywords.toLowerCase();
-        
-        if (character.includes(input) || keywords.includes(input)) {
-          card.style.display = "block";
-        } else {
-          card.style.display = "none";
-        }
-      });
-    }
-
-    // Show all cards initially and initialize tracking
-    document.addEventListener("DOMContentLoaded", function() {
-      const cards = document.querySelectorAll(".card");
-      cards.forEach(card => {
-        card.style.display = "block";
-      });
-
-      // Initialize click tracking
-      initializeClickTracking();
-    });
-  </script>
-</body>
-</html>
+          if (card && !card.
