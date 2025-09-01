@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Character Choices</title>
+
+  <!-- Discord & Social Media Preview -->
+  <meta property="og:title" content="Date Guide & Chart" />
+  <meta property="og:description" content="GoodLuck with the Date." />
+  <meta property="og:image" content="https://sk4ie.github.io/Character-choices-/preview.png" />
+  <meta property="og:url" content="https://mazoku.cc" />
+  <meta property="og:type" content="website" />
+  <meta property="og:image:width" content="2816" />
+  <meta property="og:image:height" content="1478" />
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 15px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .theme-toggle {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+      padding-right: 20px;
+      padding-top: 20px;
+    }
+
+    .theme-switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+    }
+
+    .theme-switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 34px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "☀️";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+    }
+
+    input:checked + .slider {
+      background-color: #4da6ff;
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(26px);
+      content: "🌙";
+    }
+
+    .search-box {
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .search-box input {
+      width: 100%;
+      max-width: 400px;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: 1px solid;
+      outline: none;
+      transition: all 0.3s ease;
+    }
+
+    .card {
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 20px;
+      transition: all 0.3s ease;
+      border: 1px solid;
+      position: relative;
+    }
+
+    .card h2 {
+      margin: 0;
+      margin-bottom: 10px;
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.3s ease;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .click-counter {
+      font-size: 12px;
+      background-color: #4da6ff;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-weight: normal;
+      min-width: 20px;
+      text-align: center;
+    }
+
+    .stats-section {
+      background-color: rgba(77, 166, 255, 0.1);
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 20px;
+      text-align: center;
+      border: 1px solid rgba(77, 166, 255, 0.3);
+    }
+
+    .stats-section h3 {
+      margin: 0 0 10px 0;
+      color: #4da6ff;
+      font-size: 16px;
+    }
+
+    .stats-text {
+      font-size: 14px;
+      opacity: 0.8;
+    }
+
+    .popular-badge {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+      color: white;
+      font-size: 10px;
+      padding: 3px 6px;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    body.light-mode .click-counter {
+      background-color: #0077cc;
+    }
+
+    body.light-mode .stats-section {
+      background-color: rgba(0, 119, 204, 0.1);
+      border-color: rgba(0, 119, 204, 0.3);
+    }
+
+    body.light-mode .stats-section h3 {
+      color: #0077cc;
+    }
+
+    .card-content {
+      display: none;
+      margin-top: 10px;
+    }
+
+    .info {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      border-bottom: 1px solid;
+    }
+
+    .info:last-child {
+      border-bottom: none;
+    }
+
+    .label {
+      font-weight: bold;
+    }
+
+    .good {
+      color: #4caf50 !important;
+      font-weight: bold;
+    }
+
+    .unsure {
+      color: #ff9800 !important;
+      font-weight: bold;
+    }
+
+    .wrong {
+      color: #f44336 !important;
+      font-weight: bold;
+    }
+
+    /* Dark theme (default) */
+    body {
+      background-color: #1a1a1a;
+      color: #e0e0e0;
+    }
+
+    h1 {
+      color: #ffffff;
+    }
+
+    .search-box input {
+      border-color: #444;
+      background-color: #2d2d2d;
+      color: #e0e0e0;
+    }
+
+    .search-box input:focus {
+      border-color: #4da6ff;
+    }
+
+    .search-box input::placeholder {
+      color: #999;
+    }
+
+    .card {
+      background-color: #2d2d2d;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      border-color: #444;
+    }
+
+    .card:hover {
+      border-color: #555;
+    }
+
+    .card h2 {
+      color: #4da6ff;
+    }
+
+    .card h2:hover {
+      color: #66b3ff;
+    }
+
+    .info {
+      border-color: #444;
+    }
+
+    .label {
+      color: #cccccc;
+    }
+
+    .value {
+      color: #b0b0b0;
+    }
+
+    /* Light theme */
+    body.light-mode {
+      background-color: #f8f9fa;
+      color: #333;
+    }
+
+    body.light-mode h1 {
+      color: #333;
+    }
+
+    body.light-mode .search-box input {
+      border-color: #ccc;
+      background-color: #fff;
+      color: #333;
+    }
+
+    body.light-mode .search-box input:focus {
+      border-color: #0077cc;
+    }
+
+    body.light-mode .search-box input::placeholder {
+      color: #666;
+    }
+
+    body.light-mode .card {
+      background-color: #fff;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-color: #eee;
+    }
+
+    body.light-mode .card:hover {
+      border-color: #ddd;
+    }
+
+    body.light-mode .card h2 {
+      color: #0077cc;
+    }
+
+    body.light-mode .card h2:hover {
+      color: #005599;
+    }
+
+    body.light-mode .info {
+      border-color: #eee;
+    }
+
+    body.light-mode .label {
+      color: #333;
+    }
+
+    body.light-mode .value {
+      color: #555;
+    }
+
+    @media (max-width: 600px) {
+      .info {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .value {
+        margin-top: 4px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="theme-toggle">
+    <label class="theme-switch">
+      <input type="checkbox" id="themeToggle" checked>
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <div class="container">
+    <h1>Character Choices</h1>
+
+    <div class="search-box">
+      <input type="text" id="searchInput" placeholder="Search character or keyword..." onkeyup="filterCards()" />
+    </div>
+
+    <!-- Stats Section -->
+    <div class="stats-section" id="statsSection" style="display: none;">
+      <h3>📊 Your Stats</h3>
+      <div class="stats-text" id="statsText">Start clicking characters to see your activity!</div>
+    </div>
+
+    <!-- Cards Start -->
+
+    <div class="card" data-character="severia" data-keywords="call friends help macaron cat plush cheer bite smear things sushi jellyfish wink turtle rasberry">
+      <h2 onclick="toggleCard(this)">
+        <span>Severia</span>
+        <span class="click-counter" id="counter-severia">0</span>
+      </h2>
+      <div class="card-content">
+        <div class="info"><span class="label">Accident:</span><span class="value good">Call Friends to Help</span></div>
+        <div class="info"><span class="label">Buy From Store:</span><span class="value good">Macaron</span></div>
+        <div class="info"><span class="label">Plushy:</span><span class="value good">Cat Plush</span></div>
+        <div class="info"><span class="label">Volleyball:</span><span class="value good">Cheer</span></div>
+        <div class="info"><span class="label">Sweetness:</span><span class="value good">Bite</span></div>
+        <div class="info"><span class="label">Dare or Flip:</span><span class="value good">Smear Things</span></div>
+        <div class="info"><span class="label">Food:</span><span class="value good">Sushi</span></div>
+        <div class="info"><span class="label">Aquarium:</span><span class="value good">Jellyfish</span></div>
+        <div class="info"><span class="label">Fit:</span><span class="value good">Wink</span></div>
+        <div class="info"><span class="label">Paint:</span><span class="value good">Turtle</span></div>
+        <div class="info"><span class="label">Smoothie:</span><span class="value good">Rasberry</span></div>
+      </div>
+    </div>
+
+    <div class="card" data-character="hoshou marine" data-keywords="call police ice cream key chain hesitate peanut butter change topic beach picnic dolphin look away beach passionfruit">
+      <h2 onclick="toggleCard(this)">
+        <span>Hoshou Marine</span>
+        <span class="click-counter" id="counter-hoshou marine">0</span>
+      </h2>
+      <div class="card-content">
+        <div class="info"><span class="label">Accident:</span><span class="value good">Call Police</span></div>
+        <div class="info"><span class="label">Buy From Store:</span><span class="value good">Ice Cream</span></div>
+        <div class="info"><span class="label">Plushy:</span><span class="value good">Key Chain</span></div>
+        <div class="info"><span class="label">Volleyball:</span><span class="value good">Hesitate</span></div>
+        <div class="info"><span class="label">Sweetness:</span><span class="value good">Peanut Butter</span></div>
+        <div class="info"><span class="label">Dare or Flip:</span><span class="value good">Change Topic</span></div>
+        <div class="info"><span class="label">Food:</span><span class="value good">Beach Picnic</span></div>
+        <div class="info"><span class="label">Aquarium:</span><span class="value good">Dolphin</span></div>
+        <div class="info"><span class="label">Fit:</span><span class="value good">Look Away</span></div>
+        <div class="info"><span class="label">Paint:</span><span class="value good">Beach</span></div>
+        <div class="info"><span class="label">Smoothie:</span><span class="value good">Passionfruit</span></div>
+      </div>
+    </div>
+
+    <div class="card" data-character="shylily" data-keywords="rush help lollipop figurine modest roasting contact splash juice italian reef fish tease portrait banana">
+      <h2 onclick="toggleCard(this)">
+        <span>Shylily</span>
+        <span class="click-counter" id="counter-shylily">0</span>
+      </h2>
+      <div class="card-content">
+        <div class="info"><span class="label">Accident:</span><span class="value good">Rush Help</span></div>
+        <div class="info"><span class="label">Buy From Store:</span><span class="value good">Lollipop</span></div>
+        <div class="info"><span class="label">Plushy:</span><span class="value good">Figurine</span></div>
+        <div class="info"><span class="label">Volleyball:</span><span class="value good">Modest</span></div>
+        <div class="info"><span class="label">Sweetness:</span><span class="value good">Roasting Contact</span></div>
+        <div class="info"><span class="label">Dare or Flip:</span><span class="value good">Splash Juice</span></div>
+        <div class="info"><span class="label">Food:</span><span class="value good">Italian</span></div>
+        <div class="info"><span class="label">Aquarium:</span><span class="value good">Reef Fish</span></div>
+        <div class="info"><span class="label">Fit:</span><span class="value good">Tease</span></div>
+        <div class="info"><span class="label">Paint:</span><span class="value good">Portrait</span></div>
+        <div class="info"><span class="label">Smoothie:</span><span class="value good">Banana</span></div>
+      </div>
+    </div>
+
+    <div class="card" data-character="weepy miu" data-keywords="ignore marshmallow body pillow kindly reject strawberry feed her steak turtle compliment abstract mango">
+      <h2 onclick="toggleCard(this)">
+        <span>Weepy Miu</span>
+        <span class="click-counter" id="counter-weepy miu">0</span>
+      </h2>
+      <div class="card-content">
+        <div class="info"><span class="label">Accident:</span><span class="value good">Ignore</span></div>
+        <div class="info"><span class="label">Buy From Store:</span><span class="value good">Marshmallow</span></div>
+        <div class="info"><span class="label">Plushy:</span><span class="value good">Body Pillow</span></div>
+        <div class="info"><span class="label">Volleyball:</span><span class="value good">Kindly Reject</span></div>
+        <div class="info"><span class="label">Sweetness:</span><span class="value good">Strawberry</span></div>
+        <div class="info"><span class="label">Dare or Flip:</span><span class="value good">Feed Her</span></div>
+        <div class="info"><span class="label">Food:</span><span class="value good">Steak</span></div>
+        <div class="info"><span class="label">Aquarium:</span><span class="value good">Turtle</span></div>
+        <div class="info"><span class="label">Fit:</span><span class="value good">Compliment</span></div>
+        <div class="info"><span class="label">Paint:</span><span class="value good">Abstract</span></div>
+        <div class="info"><span class="label">Smoothie:</span><span class="value good">Mango</span></div>
+      </div>
+    </div>
+
+    <div class="card" data-character="lunar bunnie" data-keywords="start recording chocolate bar squishmallow join game double chocolate take dare ramen seal towel flower banquet chocolate">
+      <h2 onclick="toggleCard(this)">
+        <span>Lunar Bunnie</span>
+        <span class="click-counter" id="counter-lunar bunnie">0</span>
+      </h2>
+      <div class="card-content">
+        <div class="info"><span class="label">Accident:</span><span class="value good">Start Recording</span></div>
+        <div class="info"><span class="label">Buy From Store:</span><span class="value good">Chocolate Bar</span></div>
+        <div class="info"><span class="label">Plushy:</span><span class="value good">Squishmallow</span></div>
+        <div class="info"><span class="label">Volleyball:</span><span class="value good">Join Game</span></div>
+        <div class="info"><span class="label">Sweetness:</span><span class="value good">Double Chocolate</span></div>
+        <div class="info"><span class="label">Dare or Flip:</span><span class="value good">Take Dare</span></div>
+        <div class="info"><span class="label">Food:</span><span class="value good">Ramen</span></div>
+        <div class="info"><span class="label">Aquarium:</span><span class="value good">Seal</span></div>
+        <div class="info"><span class="label">Fit:</span><span class="value good">Towel</span></div>
+        <div class="info"><span class="label">Paint:</span><span class="value good">Flower Banquet</span></div>
+        <div class="info"><span class="label">Smoothie:</span><span class="value good">Chocolate</span></div>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 30px; padding: 20px;">
+      <a href="https://discord.com/users/1083806021094486116" target="_blank" style="
+        text-decoration: none; 
+        color: #888;
+        font-size: 12px;
+        transition: color 0.3s ease;
+      " onmouseover="this.style.color='#4da6ff'" onmouseout="this.style.color='#888'">
+        @kai.obi
+      </a>
+    </div>
+  </div>
+
+  <script>
+    // NOTE: This localStorage functionality will work on your live GitHub Pages site
+    // but not in this Claude.ai artifact preview due to technical limitations
+
+    // Character click tracking
+    let clickData = {};
+
+    // Initialize click tracking (this would use localStorage on your live site)
+    function initializeClickTracking() {
+      // On your live site, this would be:
+      // clickData = JSON.parse(localStorage.getItem('characterClicks')) || {};
+      
+      // For demo purposes in this artifact, we'll use a temporary object
+      clickData = {
+        'severia': 0,
+        'hoshou marine': 0,
+        'shylily': 0,
+        'weepy miu': 0,
+        'lunar bunnie': 0
+      };
+
+      updateAllCounters();
+      updateStats();
+    }
+
+    // Save click data (this would use localStorage on your live site)
+    function saveClickData() {
+      // On your live site, this would be:
+      // localStorage.setItem('characterClicks', JSON.stringify(clickData));
+      
+      // For now, data only persists during the current session
+      updateStats();
+    }
+
+    // Track character click
+    function trackClick(characterName) {
+      if (!clickData[characterName]) {
+        clickData[characterName] = 0;
+      }
+      clickData[characterName]++;
+      
+      // Update the counter display
+      const counter = document.getElementById(`counter-${characterName}`);
+      if (counter) {
+        counter.textContent = clickData[characterName];
+      }
+
+      // Add popular badge if clicked 5+ times
+      const card = document.querySelector(`[data-character="${characterName}"]`);
+      if (clickData[characterName] >= 5 && !card.querySelector('.popular-badge')) {
+        const badge = document.createElement('div');
+        badge.className = 'popular-badge';
+        badge.textContent = '🔥 Popular';
+        card.appendChild(badge);
+      }
+
+      saveClickData();
+    }
+
+    // Update all counter displays
+    function updateAllCounters() {
+      Object.keys(clickData).forEach(character => {
+        const counter = document.getElementById(`counter-${character}`);
+        if (counter) {
+          counter.textContent = clickData[character] || 0;
+        }
+
+        // Add popular badges for characters with 5+ clicks
+        if (clickData[character] >= 5) {
+          const card = document.querySelector(`[data-character="${character}"]`);
+          if (card && !card.querySelector('.popular-badge')) {
+            const badge = document.createElement('div');
+            badge.className = 'popular-badge';
+            badge.textContent = '🔥 Popular';
+            card.appendChild(badge);
+          }
+        }
+      });
+    }
+
+    // Update stats section
+    function updateStats() {
+      const totalClicks = Object.values(clickData).reduce((sum, clicks) => sum + clicks, 0);
+      
+      if (totalClicks === 0) {
+        document.getElementById('statsSection').style.display = 'none';
+        return;
+      }
+
+      document.getElementById('statsSection').style.display = 'block';
+
+      // Find most clicked character
+      let mostClicked = Object.keys(clickData).reduce((a, b) => 
+        clickData[a] > clickData[b] ? a : b
+      );
+
+      // Capitalize character names for display
+      const capitalizedName = mostClicked.split(' ').map(word => 
+        word.charAt(0).toUpperCase() + word.slice(1)
+      ).join(' ');
+
+      const statsText = document.getElementById('statsText');
+      statsText.innerHTML = `
+        <strong>Total clicks:</strong> ${totalClicks}<br>
+        <strong>Most viewed:</strong> ${capitalizedName} (${clickData[mostClicked]} times)<br>
+        <small>Your activity is saved locally on this device</small>
+      `;
+    }
+
+    // Theme toggle functionality
+    const themeToggle = document.getElementById('themeToggle');
+    const body = document.body;
+
+    // Set initial theme (dark mode by default)
+    themeToggle.checked = true;
+
+    themeToggle.addEventListener('change', function() {
+      if (this.checked) {
+        // Dark mode (checkbox checked)
+        body.classList.remove('light-mode');
+      } else {
+        // Light mode (checkbox unchecked)
+        body.classList.add('light-mode');
+      }
+    });
+
+    function toggleCard(header) {
+      const content = header.nextElementSibling;
+      const isOpening = content.style.display !== "block";
+      content.style.display = isOpening ? "block" : "none";
+
+      // Track the click if opening the card
+      if (isOpening) {
+        const card = header.closest('.card');
+        const characterName = card.dataset.character;
+        trackClick(characterName);
+      }
+    }
+
+    function filterCards() {
+      const input = document.getElementById("searchInput").value.toLowerCase().trim();
+      const cards = document.querySelectorAll(".card");
+
+      cards.forEach(card => {
+        if (input === "") {
+          card.style.display = "block";
+          return;
+        }
+
+        const character = card.dataset.character.toLowerCase();
+        const keywords = card.dataset.keywords.toLowerCase();
+        
+        if (character.includes(input) || keywords.includes(input)) {
+          card.style.display = "block";
+        } else {
+          card.style.display = "none";
+        }
+      });
+    }
+
+    // Show all cards initially and initialize tracking
+    document.addEventListener("DOMContentLoaded", function() {
+      const cards = document.querySelectorAll(".card");
+      cards.forEach(card => {
+        card.style.display = "block";
+      });
+
+      // Initialize click tracking
+      initializeClickTracking();
+    });
+  </script>
+</body>
+</html>
