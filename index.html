@@ -20,6 +20,8 @@
       margin: 0;
       padding: 0;
       transition: background-color 0.3s ease, color 0.3s ease;
+      background-color: #1a1a1a;
+      color: #e0e0e0;
     }
 
     .container {
@@ -31,6 +33,7 @@
     h1 {
       text-align: center;
       margin-bottom: 10px;
+      color: #ffffff;
     }
 
     .theme-toggle {
@@ -61,14 +64,14 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background-color: #ccc;
+      background-color: #4da6ff;
       transition: .4s;
       border-radius: 34px;
     }
 
     .slider:before {
       position: absolute;
-      content: "☀️";
+      content: "🌙";
       height: 26px;
       width: 26px;
       left: 4px;
@@ -80,15 +83,7 @@
       align-items: center;
       justify-content: center;
       font-size: 14px;
-    }
-
-    input:checked + .slider {
-      background-color: #4da6ff;
-    }
-
-    input:checked + .slider:before {
       transform: translateX(26px);
-      content: "🌙";
     }
 
     .search-box {
@@ -103,18 +98,34 @@
       padding: 10px;
       font-size: 16px;
       border-radius: 8px;
-      border: 1px solid;
+      border: 1px solid #444;
+      background-color: #2d2d2d;
+      color: #e0e0e0;
       outline: none;
       transition: all 0.3s ease;
     }
 
+    .search-box input:focus {
+      border-color: #4da6ff;
+    }
+
+    .search-box input::placeholder {
+      color: #999;
+    }
+
     .card {
+      background-color: #2d2d2d;
       border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
       padding: 16px;
       margin-bottom: 20px;
       transition: all 0.3s ease;
-      border: 1px solid;
+      border: 1px solid #444;
       position: relative;
+    }
+
+    .card:hover {
+      border-color: #555;
     }
 
     .card h2 {
@@ -123,9 +134,54 @@
       cursor: pointer;
       user-select: none;
       transition: color 0.3s ease;
+      color: #4da6ff;
       display: flex;
       justify-content: space-between;
       align-items: center;
+    }
+
+    .card h2:hover {
+      color: #66b3ff;
+    }
+
+    .card-content {
+      display: none;
+      margin-top: 10px;
+    }
+
+    .info {
+      display: flex;
+      justify-content: space-between;
+      padding: 6px 0;
+      border-bottom: 1px solid #444;
+    }
+
+    .info:last-child {
+      border-bottom: none;
+    }
+
+    .label {
+      font-weight: bold;
+      color: #cccccc;
+    }
+
+    .value {
+      color: #b0b0b0;
+    }
+
+    .good {
+      color: #4caf50 !important;
+      font-weight: bold;
+    }
+
+    .unsure {
+      color: #ff9800 !important;
+      font-weight: bold;
+    }
+
+    .wrong {
+      color: #f44336 !important;
+      font-weight: bold;
     }
 
     .click-counter {
@@ -149,6 +205,7 @@
       text-align: center;
       border: 1px solid rgba(77, 166, 255, 0.3);
       backdrop-filter: blur(10px);
+      display: none;
     }
 
     .stats-section h3 {
@@ -162,6 +219,7 @@
       font-size: 15px;
       line-height: 1.6;
       font-weight: 500;
+      color: #e0e0e0;
     }
 
     .stats-text strong {
@@ -191,113 +249,19 @@
       box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
     }
 
-    body.light-mode .click-counter {
-      background: linear-gradient(135deg, #0077cc, #4da6ff);
-    }
-
-    body.light-mode .stats-section {
-      background: linear-gradient(135deg, rgba(0, 119, 204, 0.15), rgba(0, 119, 204, 0.05));
-      border-color: rgba(0, 119, 204, 0.3);
-    }
-
-    body.light-mode .stats-section h3 {
-      color: #0077cc;
-    }
-
-    body.light-mode .stats-text {
-      color: #333;
-    }
-
-    .card-content {
-      display: none;
-      margin-top: 10px;
-    }
-
-    .info {
-      display: flex;
-      justify-content: space-between;
-      padding: 6px 0;
-      border-bottom: 1px solid;
-    }
-
-    .info:last-child {
-      border-bottom: none;
-    }
-
-    .label {
+    .popular-badge {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+      color: white;
+      font-size: 10px;
+      padding: 3px 6px;
+      border-radius: 8px;
       font-weight: bold;
     }
 
-    .good {
-      color: #4caf50 !important;
-      font-weight: bold;
-    }
-
-    .unsure {
-      color: #ff9800 !important;
-      font-weight: bold;
-    }
-
-    .wrong {
-      color: #f44336 !important;
-      font-weight: bold;
-    }
-
-    /* Dark theme (default) */
-    body {
-      background-color: #1a1a1a;
-      color: #e0e0e0;
-    }
-
-    h1 {
-      color: #ffffff;
-    }
-
-    .search-box input {
-      border-color: #444;
-      background-color: #2d2d2d;
-      color: #e0e0e0;
-    }
-
-    .search-box input:focus {
-      border-color: #4da6ff;
-    }
-
-    .search-box input::placeholder {
-      color: #999;
-    }
-
-    .card {
-      background-color: #2d2d2d;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-      border-color: #444;
-    }
-
-    .card:hover {
-      border-color: #555;
-    }
-
-    .card h2 {
-      color: #4da6ff;
-    }
-
-    .card h2:hover {
-      color: #66b3ff;
-    }
-
-    .info {
-      border-color: #444;
-    }
-
-    .label {
-      color: #cccccc;
-    }
-
-    .value {
-      color: #b0b0b0;
-    }
-
-    /* Light theme */
+    /* Light mode */
     body.light-mode {
       background-color: #f8f9fa;
       color: #333;
@@ -351,6 +315,32 @@
       color: #555;
     }
 
+    body.light-mode .click-counter {
+      background: linear-gradient(135deg, #0077cc, #4da6ff);
+    }
+
+    body.light-mode .stats-section {
+      background: linear-gradient(135deg, rgba(0, 119, 204, 0.15), rgba(0, 119, 204, 0.05));
+      border-color: rgba(0, 119, 204, 0.3);
+    }
+
+    body.light-mode .stats-section h3 {
+      color: #0077cc;
+    }
+
+    body.light-mode .stats-text {
+      color: #333;
+    }
+
+    body.light-mode .slider {
+      background-color: #ccc;
+    }
+
+    body.light-mode .slider:before {
+      content: "☀️";
+      transform: translateX(0);
+    }
+
     @media (max-width: 600px) {
       .info {
         flex-direction: column;
@@ -366,7 +356,7 @@
 <body>
   <div class="theme-toggle">
     <label class="theme-switch">
-      <input type="checkbox" id="themeToggle" checked>
+      <input type="checkbox" id="themeToggle" checked onchange="toggleTheme()">
       <span class="slider"></span>
     </label>
   </div>
@@ -379,14 +369,13 @@
     </div>
 
     <!-- Stats Section -->
-    <div class="stats-section" id="statsSection" style="display: none;">
+    <div class="stats-section" id="statsSection">
       <h3>📊 Your Activity</h3>
       <div class="stats-text" id="statsText">Start clicking characters to see your activity!</div>
       <button class="reset-btn" onclick="resetStats()">🔄 Reset All Data</button>
     </div>
 
     <!-- Cards Start -->
-
     <div class="card" data-character="severia" data-keywords="call friends help macaron cat plush cheer bite smear things sushi jellyfish wink turtle rasberry">
       <h2 onclick="toggleCard(this)">
         <span>Severia</span>
@@ -500,18 +489,16 @@
   </div>
 
   <script>
-    // Character click tracking with REAL localStorage (works on your live site!)
+    // Character click tracking with localStorage
     let clickData = {};
 
-    // Initialize click tracking with localStorage
+    // Initialize click tracking
     function initializeClickTracking() {
       try {
-        // Load data from localStorage (this WILL work on your GitHub Pages site!)
         const savedData = localStorage.getItem('characterClicks');
         if (savedData) {
           clickData = JSON.parse(savedData);
         } else {
-          // Initialize with zeros if no saved data
           clickData = {
             'severia': 0,
             'hoshou marine': 0,
@@ -521,8 +508,6 @@
           };
         }
       } catch (error) {
-        // Fallback for Claude.ai artifact (won't persist)
-        console.log('localStorage not available, using temporary storage');
         clickData = {
           'severia': 0,
           'hoshou marine': 0,
@@ -531,45 +516,18 @@
           'lunar bunnie': 0
         };
       }
-
       updateAllCounters();
       updateStats();
     }
 
-    // Save click data to localStorage
+    // Save click data
     function saveClickData() {
       try {
-        // This WILL work and persist on your GitHub Pages site!
         localStorage.setItem('characterClicks', JSON.stringify(clickData));
       } catch (error) {
         console.log('localStorage not available');
       }
       updateStats();
-    }
-
-    // Reset all statistics
-    function resetStats() {
-      if (confirm('Are you sure you want to reset all your click data? This cannot be undone!')) {
-        clickData = {
-          'severia': 0,
-          'hoshou marine': 0,
-          'shylily': 0,
-          'weepy miu': 0,
-          'lunar bunnie': 0
-        };
-        
-        try {
-          localStorage.setItem('characterClicks', JSON.stringify(clickData));
-        } catch (error) {
-          console.log('localStorage not available');
-        }
-
-        // Remove all popular badges
-        document.querySelectorAll('.popular-badge').forEach(badge => badge.remove());
-        
-        updateAllCounters();
-        updateStats();
-      }
     }
 
     // Track character click
@@ -579,44 +537,72 @@
       }
       clickData[characterName]++;
       
-      // Update the counter display
-      const counter = document.getElementById(`counter-${characterName}`);
+      const counter = document.getElementById('counter-' + characterName);
       if (counter) {
         counter.textContent = clickData[characterName];
       }
 
-      // Add popular badge if clicked 5+ times
-      const card = document.querySelector(`[data-character="${characterName}"]`);
-      if (clickData[characterName] >= 5 && !card.querySelector('.popular-badge')) {
-        const badge = document.createElement('div');
-        badge.className = 'popular-badge';
-        badge.textContent = '🔥 Popular';
-        badge.style.cssText = `
-          position: absolute;
-          top: 8px;
-          right: 8px;
-          background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
-          color: white;
-          font-size: 10px;
-          padding: 3px 6px;
-          border-radius: 8px;
-          font-weight: bold;
-        `;
-        card.appendChild(badge);
+      if (clickData[characterName] >= 5) {
+        const card = document.querySelector('[data-character="' + characterName + '"]');
+        if (card && !card.querySelector('.popular-badge')) {
+          const badge = document.createElement('div');
+          badge.className = 'popular-badge';
+          badge.textContent = '🔥 Popular';
+          card.appendChild(badge);
+        }
       }
 
       saveClickData();
     }
 
-    // Update all counter displays
+    // Update all counters
     function updateAllCounters() {
-      Object.keys(clickData).forEach(character => {
-        const counter = document.getElementById(`counter-${character}`);
+      Object.keys(clickData).forEach(function(character) {
+        const counter = document.getElementById('counter-' + character);
         if (counter) {
           counter.textContent = clickData[character] || 0;
         }
 
-        // Add popular badges for characters with 5+ clicks
         if (clickData[character] >= 5) {
-          const card = document.querySelector(`[data-character="${character}"]`);
-          if (card && !card.
+          const card = document.querySelector('[data-character="' + character + '"]');
+          if (card && !card.querySelector('.popular-badge')) {
+            const badge = document.createElement('div');
+            badge.className = 'popular-badge';
+            badge.textContent = '🔥 Popular';
+            card.appendChild(badge);
+          }
+        }
+      });
+    }
+
+    // Update stats
+    function updateStats() {
+      const totalClicks = Object.values(clickData).reduce(function(sum, clicks) {
+        return sum + clicks;
+      }, 0);
+      
+      const statsSection = document.getElementById('statsSection');
+      if (totalClicks === 0) {
+        statsSection.style.display = 'none';
+        return;
+      }
+
+      statsSection.style.display = 'block';
+
+      let mostClicked = Object.keys(clickData).reduce(function(a, b) {
+        return clickData[a] > clickData[b] ? a : b;
+      });
+
+      const capitalizedName = mostClicked.split(' ').map(function(word) {
+        return word.charAt(0).toUpperCase() + word.slice(1);
+      }).join(' ');
+
+      const statsText = document.getElementById('statsText');
+      statsText.innerHTML = '<strong>Total clicks:</strong> ' + totalClicks + '<br><strong>Most viewed:</strong> ' + capitalizedName + ' (' + clickData[mostClicked] + ' times)<br><small>Data is saved permanently on your device</small>';
+    }
+
+    // Reset stats
+    function resetStats() {
+      if (confirm('Are you sure you want to reset all your click data? This cannot be undone!')) {
+        clickData = {
+  
